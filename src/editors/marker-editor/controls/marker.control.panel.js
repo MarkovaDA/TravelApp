@@ -58,7 +58,7 @@ export class MarkerEditorControlPanel extends Control {
     }
 
     open() {
-        this.elem$.slideDown(300);
+        this.elem$.stop(true, true).slideDown(300);
     }
 
     close() {

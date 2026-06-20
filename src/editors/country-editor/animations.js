@@ -22,6 +22,7 @@ export function easeFeatureIn(map, feature) {
 
     if (opacity >= 0.8) {
       unByKey(listenerKey);
+      feature.renderBasic();
       return;
     }
 
@@ -29,7 +30,7 @@ export function easeFeatureIn(map, feature) {
   }
 
   map.render();
-  listenerKey = map.on('postcompose', animate);
+  listenerKey = map.on('postrender', animate);
 }
 
 export function easeFeatureOut(map, feature) {
@@ -60,5 +61,5 @@ export function easeFeatureOut(map, feature) {
   }
 
   map.render();
-  listenerKey = map.on('postcompose', animate);
+  listenerKey = map.on('postrender', animate);
 }

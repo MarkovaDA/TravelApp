@@ -1,4 +1,5 @@
 import {MarkerContextMenu, MARKER_EDITOR_CONTEXT_MENU_EVENTS} from "./controls/context.menu";
+import $ from 'jquery/dist/jquery';
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import Point from 'ol/geom/Point';
@@ -62,7 +63,9 @@ export class MapMarkerEditor {
 
             this.vectorSource.addFeature(marker);
             this.serializer.serializeFeature(marker);
-            this.contextMenu.close()
+            this.contextMenu.close();
+            this.map.suppressPanelCloseUntil = Date.now() + 400;
+            setTimeout(() => this.selectMarker(marker), 0);
         });
 
         // removing marker
@@ -77,29 +80,59 @@ export class MapMarkerEditor {
 
         // selection marker
         this.select.on('select', () => {
+            if (this._syncingSelection) {
+                return;
+            }
+
             const selected = this.select.getFeatures().getArray()[0];
 
             if (!selected) {
-                const newSource = this.selectedMarker.get('source');
-                this.selectedMarker.selected = false;
-                this.selectedMarker.setStyle(baseMarkerStyle(0.8, newSource));
+                if (this.selectedMarker) {
+                    const newSource = this.selectedMarker.get('source');
+                    this.selectedMarker.selected = false;
+                    this.selectedMarker.setStyle(baseMarkerStyle(0.8, newSource));
+                }
                 this.control.close();
                 return;
             }
 
-            const source = selected.get('source');
-
-            if (source) {
-                selected.setStyle(selectedMarkerStyle(1, source));
-            }
-
-            this.selectedMarker = selected;
-            this.selectedMarker.selected = true;
-            this.control.apply(selected);
+            this.selectMarker(selected);
         });
 
         this.control.on(MARKER_EDITOR_CONTROL_PANEL_EVENTS.MARKER_HAS_MODIFIED, ({marker}) => {
             this.serializer.serializeFeature(marker);
         });
+    }
+
+    selectMarker(marker) {
+        if (!marker) {
+            return;
+        }
+
+        if (this.selectedMarker && this.selectedMarker !== marker) {
+            const previousSource = this.selectedMarker.get('source');
+            this.selectedMarker.selected = false;
+            this.selectedMarker.setStyle(baseMarkerStyle(0.8, previousSource));
+        }
+
+        const source = marker.get('source');
+
+        if (source) {
+            marker.setStyle(selectedMarkerStyle(1, source));
+        }
+
+        this.selectedMarker = marker;
+        this.selectedMarker.selected = true;
+
+        const collection = this.select.getFeatures();
+        if (collection.getArray()[0] !== marker) {
+            this._syncingSelection = true;
+            collection.clear();
+            collection.push(marker);
+            this._syncingSelection = false;
+        }
+
+        $('#country-editor-control-panel').stop(true, true).slideUp(200);
+        this.control.apply(marker);
     }
 }

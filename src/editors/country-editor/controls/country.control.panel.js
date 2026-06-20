@@ -19,13 +19,18 @@ export class CountryEditorControlPanel extends Control {
   }
 
   bindEvents() {
-    this.colorSwitcher$.on('click', ({target}) => {
-      const value = $(target).attr('rgb');
+    this.colorSwitcher$.on('click', (event) => {
+      const value = $(event.currentTarget).attr('rgb');
+
+      if (!value) {
+        return;
+      }
 
       this.feature.set('color', value);
       this.feature.activeStyle = { color: value }; 
       this.feature.baseStyle = { color: value };
       this.feature.renderActive();
+      this.map.render();
     
       this.notifyChanged();     
     });
@@ -77,7 +82,7 @@ export class CountryEditorControlPanel extends Control {
   }
 
   open() {
-    this.elem$.slideDown(300);
+    this.elem$.stop(true, true).slideDown(300);
   }
 
   close() {

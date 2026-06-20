@@ -1,5 +1,13 @@
 import { Fill, Stroke, Style, Text } from 'ol/style';
 
+const parseColor = (color) => {
+  if (!color || typeof color !== 'string') {
+    return ['0', '123', '255'];
+  }
+
+  return color.split(',').map((part) => part.trim());
+};
+
 const featureTextStyle = (label) => {
 	return new Text({
 		font: '12px Arial',
@@ -24,7 +32,7 @@ export const emptyFeatureStyle = () => {
 }
 
 export const baseFeatureStyle = (color, label, showLabel = false, opacity = 0.8) => {
-  const [R, G, B] = color.split(',');
+  const [R, G, B] = parseColor(color);
 
   return () => {
     const polygonStyle = new Style({
@@ -43,7 +51,7 @@ export const baseFeatureStyle = (color, label, showLabel = false, opacity = 0.8)
 }
 
 export const selectedFeatureStyle = (color, label, showLabel = false) => {
-  const [R, G, B] = color.split(',');
+  const [R, G, B] = parseColor(color);
 
   return () => {
     const polygonStyle = new Style({

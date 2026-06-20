@@ -35,12 +35,14 @@ export class CountryContextMenuControl extends ContextMenuControl  {
       }
     })
 
-    this.createItem$.on('click', () => {
+    this.createItem$.on('click', (event) => {
+      event.stopPropagation();
       this.map.dispatchEvent(COUNTRY_EDITOR_CONTEXT_MENU_EVENTS.CREATE_COUNTRY)
       super.close()
     });
 
-    this.removeItem$.on('click', () => {
+    this.removeItem$.on('click', (event) => {
+      event.stopPropagation();
       this.map.dispatchEvent(COUNTRY_EDITOR_CONTEXT_MENU_EVENTS.REMOVE_COUNTRY)
       super.close()
     });

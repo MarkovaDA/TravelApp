@@ -25,7 +25,7 @@ export function easeMarkerIn(map, feature, onComplete, source) {
 	}
 
 	map.render();
-	listenerKey = map.on('postcompose', animate);
+	listenerKey = map.on('postrender', animate);
 }
 
 export function easeMarkerOut(map, feature, onComplete, source) {
@@ -49,5 +49,5 @@ export function easeMarkerOut(map, feature, onComplete, source) {
 	}
 
 	map.render();
-	listenerKey = map.on('postcompose', animate);
+	listenerKey = map.on('postrender', animate);
 }

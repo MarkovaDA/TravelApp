@@ -1,5 +1,6 @@
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
+import $ from 'jquery/dist/jquery';
 import { CountrySerializer } from './serializer.js';
 import { easeFeatureIn } from './animations.js';
 import { COUNTRY_EDITOR_CONTEXT_MENU_EVENTS, CountryContextMenuControl } from './controls/context.menu.js';
@@ -39,12 +40,17 @@ export class MapCountryEditor {
       this.removeFeature(selected);
     })
 
-    this.map.on('click', event => {
+    this.map.on('singleclick', event => {
+      if (this.shouldSuppressPanelClose()) {
+        return;
+      }
+
       const point = event.pixel;
       this.selectedFeatures = this.findFeatures(point).filter(ft => ft.get('created') === true);
       
       if (this.selectedFeatures.length < 1) {
         this.control.close();
+        return;
       }
 
       this.selectFeatures(this.selectedFeatures);
@@ -84,8 +90,9 @@ export class MapCountryEditor {
   createFeature(feature) {
     feature.set('created' , true);
     easeFeatureIn(this.map, feature);
-    
     this.serializer.serializeFeature(feature);
+    this.suppressPanelClose();
+    this.selectFeatures([feature]);
   }
 
   removeFeature(feature) {
@@ -105,14 +112,26 @@ export class MapCountryEditor {
 
   selectFeatures(features) {
     if (features.length > 0) {
+      $('#marker-editor-control-panel').stop(true, true).slideUp(200);
       this.control.applyToFeature(...features);
     }
 
     // выделяем выбранную фичу и снимаем выделение с остальных
     this.vectorSource.getFeatures().filter(ft => ft.get('created') === true).forEach(ft => {
-			const newStyle = features.includes(ft) ? ft.activeStyle : ft.baseStyle;
-			ft.setStyle(newStyle);
+			if (features.includes(ft)) {
+        ft.renderActive();
+      } else {
+        ft.renderBasic();
+      }
     })
+  }
+
+  suppressPanelClose(duration = 400) {
+    this.map.suppressPanelCloseUntil = Date.now() + duration;
+  }
+
+  shouldSuppressPanelClose() {
+    return Date.now() < (this.map.suppressPanelCloseUntil || 0);
   }
 }
 

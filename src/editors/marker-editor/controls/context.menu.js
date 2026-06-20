@@ -42,12 +42,14 @@ export class MarkerContextMenu extends ContextMenuControl {
       }
     });
 
-    this.createItem$.on('click', () => {
+    this.createItem$.on('click', (event) => {
+      event.stopPropagation();
       this.map.dispatchEvent(MARKER_EDITOR_CONTEXT_MENU_EVENTS.ADD_MARKER);
       super.close();
     })
 
-    this.removeItem$.on('click', () => {
+    this.removeItem$.on('click', (event) => {
+      event.stopPropagation();
       this.map.dispatchEvent(MARKER_EDITOR_CONTEXT_MENU_EVENTS.REMOVE_MARKER);
       super.close();
     })
