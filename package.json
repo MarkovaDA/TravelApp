@@ -8,10 +8,10 @@
     "watch": "webpack --watch --config webpack.config.js",
     "start": "webpack-dev-server --mode development --open --config webpack.config.js"
   },
-  "homepage": "https://daryamarkova.github.io/TravelEditorJS/",
+  "homepage": "https://markovada.github.io/TravelApp/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DaryaMarkova/TravelEditorJS.git"
+    "url": "https://github.com/MarkovaDA/TravelApp.git"
   },
   "keywords": [],
   "author": "",

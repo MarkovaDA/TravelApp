@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require('copy-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const publicPath = process.env.PUBLIC_PATH || (isProduction ? '/TravelApp/' : '/');
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
@@ -12,7 +13,7 @@ module.exports = {
     output: {
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, "build"),
-        publicPath: isProduction ? '/TravelEditorJS/' : '/',
+        publicPath,
     },
     devtool: isProduction ? false : 'inline-source-map',
     devServer: {
