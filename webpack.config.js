@@ -2,16 +2,19 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require('copy-webpack-plugin');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
-    mode: process.env.NODE_ENV,
+    mode: process.env.NODE_ENV || 'development',
     entry: {
         game: ['babel-polyfill', "./src/index.js"],
     },
     output: {
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, "build"),
+        publicPath: isProduction ? '/TravelEditorJS/' : '/',
     },
-    devtool: "inline-source-map",
+    devtool: isProduction ? false : 'inline-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         port: 9000
