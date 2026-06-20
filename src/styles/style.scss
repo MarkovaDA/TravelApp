@@ -1,6 +1,6 @@
-@import './src/editors/country-editor/style.scss';
-@import './src/editors/marker-editor/style.scss';
-@import './material.input.scss';
+@import "./src/editors/country-editor/style.scss";
+@import "./src/editors/marker-editor/style.scss";
+@import "./material.input.scss";
 
 body {
   margin: 0;
@@ -8,9 +8,9 @@ body {
 }
 
 .map {
-	position: absolute;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   background: silver;
 
   .ol-zoom {
@@ -23,8 +23,8 @@ body {
 }
 
 #context-menu {
-	position: absolute;
-	bottom: 0;
+  position: absolute;
+  bottom: 0;
 
   .card .dropdown-item {
     padding-left: 15px;
@@ -53,19 +53,19 @@ body {
     margin: 5px;
     padding: 0px;
     border-radius: 50%;
-   }
+  }
 }
 
 .country-label-overlay {
   padding: 5px 8px;
   font-size: 14px;
-	font-weight: normal;
+  font-weight: normal;
 }
 
 .animated-overlay {
-	-webkit-transition: all 0.2s ease-out;
-	-moz-transition: all 0.2s ease-out;
-	-ms-transition: all 0.2s ease-out;
-	-o-transition: all 0.2s ease-out;
-	transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
 }

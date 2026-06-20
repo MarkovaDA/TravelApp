@@ -1,6 +1,6 @@
-import { easeIn, inAndOut, easeOut, linear } from 'ol/easing';
-import { unByKey } from 'ol/Observable';
-import { baseFeatureStyle, emptyFeatureStyle } from './country.feature.style';
+import { easeIn, inAndOut, easeOut, linear } from "ol/easing";
+import { unByKey } from "ol/Observable";
+import { baseFeatureStyle, emptyFeatureStyle } from "./country.feature.style";
 
 export function easeFeatureIn(map, feature) {
   const start = new Date().getTime();
@@ -12,10 +12,10 @@ export function easeFeatureIn(map, feature) {
     const opacity = easeIn(elapsed / duration);
 
     const style = baseFeatureStyle(
-      feature.get('color'), 
-      feature.get('name'), 
-      feature.get('showLabel'), 
-      opacity
+      feature.get("color"),
+      feature.get("name"),
+      feature.get("showLabel"),
+      opacity,
     );
 
     feature.setStyle(style);
@@ -30,7 +30,7 @@ export function easeFeatureIn(map, feature) {
   }
 
   map.render();
-  listenerKey = map.on('postrender', animate);
+  listenerKey = map.on("postrender", animate);
 }
 
 export function easeFeatureOut(map, feature) {
@@ -41,19 +41,19 @@ export function easeFeatureOut(map, feature) {
     const frameState = event.frameState;
     const elapsed = frameState.time - start;
     const opacity = 1 - linear(elapsed / duration);
-    
+
     const style = baseFeatureStyle(
-      feature.get('color'), 
-      feature.get('name'), 
-      feature.get('showLabel'), 
-      opacity
+      feature.get("color"),
+      feature.get("name"),
+      feature.get("showLabel"),
+      opacity,
     );
 
     feature.setStyle(style);
 
     if (opacity <= 0) {
       unByKey(listenerKey);
-      feature.setStyle(emptyFeatureStyle())
+      feature.setStyle(emptyFeatureStyle());
       return;
     }
 
@@ -61,5 +61,5 @@ export function easeFeatureOut(map, feature) {
   }
 
   map.render();
-  listenerKey = map.on('postrender', animate);
+  listenerKey = map.on("postrender", animate);
 }

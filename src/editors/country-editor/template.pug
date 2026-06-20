@@ -8,22 +8,22 @@ div#country-editor-control-panel
     div.form-group.form-check
       input#country-label-switch.form-check-input(type="checkbox")
       label.form-check-label(for="country-label-switch") Show country label
-    
+
     -
       matches = [
-        { class: 'btn-primary',   color: '0,123,255'}, 
-        { class: 'btn-secondary', color: '84,91,98'}, 
-        { class: 'btn-success',   color: '30,126,52'}, 
-        { class: 'btn-danger',    color: '220,53,69'}, 
-        { class: 'btn-warning',   color: '255,193,7'}, 
-        { class: 'btn-info',      color: '17,122,139'}, 
+        { class: 'btn-primary',   color: '0,123,255'},
+        { class: 'btn-secondary', color: '84,91,98'},
+        { class: 'btn-success',   color: '30,126,52'},
+        { class: 'btn-danger',    color: '220,53,69'},
+        { class: 'btn-warning',   color: '255,193,7'},
+        { class: 'btn-info',      color: '17,122,139'},
         { class: 'btn-dark',      color: '52,58,64'}
       ]
-    
+
     div.form-group
-      each val in matches 
+      each val in matches
         button.btn.btn-colored(type="button" class=val.class rgb=val.color)
-        
+
     div.form-group
       .material-input
         textarea.input-field#country-description-field(rows="5" required="true")
@@ -32,5 +32,3 @@ div#country-editor-control-panel
 
     div.country-overlays-container
       a(href="#").country-label-overlay.badge.badge-light
-
-    

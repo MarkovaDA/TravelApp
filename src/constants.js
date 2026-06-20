@@ -1,4 +1,4 @@
 export const MapSourceTypes = {
-  markerSource: 'markerSource',
-  countrySource: 'countrySource'
-}
+  markerSource: "markerSource",
+  countrySource: "countrySource",
+};
