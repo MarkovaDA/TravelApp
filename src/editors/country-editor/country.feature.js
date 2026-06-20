@@ -19,6 +19,7 @@ export class CountryFeature extends Feature {
 		const defaultStyle = feature.get('created') ? baseStyle : emptyFeatureStyle();
 
 		super.setId(id);
+    
 		super.setProperties({
 			'activeStyle': selectedFeatureStyle(color, name, showLabel),
 			'baseStyle': baseStyle,
