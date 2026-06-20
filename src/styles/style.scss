@@ -41,6 +41,37 @@ body {
   width: 300px;
 }
 
+.map-hint {
+  position: relative;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: rgba(134, 142, 150, 0.6);
+  border: none;
+  box-shadow: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid rgba(134, 142, 150, 0.6);
+  }
+
+  &__text {
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 600;
+    color: #000;
+  }
+}
+
 #map-zoomer {
   position: absolute;
   right: 10px;
