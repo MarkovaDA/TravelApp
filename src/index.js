@@ -36,3 +36,31 @@ map.addControl(new ContextMenuControl(map).apply());
 
 new MapCountryEditor(map).apply();
 new MapMarkerEditor(map).apply();
+
+const MIN_LOADER_MS = 1500;
+const loaderShownAt = Date.now();
+
+function hideLoader() {
+  const loader = document.getElementById("app-loader");
+
+  if (!loader || loader.classList.contains("app-loader--hidden")) {
+    return;
+  }
+
+  loader.classList.add("app-loader--hidden");
+  loader.addEventListener(
+    "transitionend",
+    () => {
+      loader.remove();
+    },
+    { once: true },
+  );
+}
+
+function scheduleHideLoader() {
+  const remaining = Math.max(0, MIN_LOADER_MS - (Date.now() - loaderShownAt));
+  setTimeout(hideLoader, remaining);
+}
+
+map.once("rendercomplete", scheduleHideLoader);
+setTimeout(hideLoader, 5000);

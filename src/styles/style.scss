@@ -7,6 +7,16 @@ body {
   padding: 0;
 }
 
+.app-loader {
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  &--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 .map {
   position: absolute;
   width: 100%;

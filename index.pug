@@ -7,7 +7,45 @@ html(lang="en")
 
     title Travel editor
 
+    style.
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.92);
+      }
+      #app-loader .app-loader__spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #dee2e6;
+        border-top-color: #868e96;
+        border-radius: 50%;
+        animation: app-loader-spin 0.8s linear infinite;
+      }
+      #app-loader .app-loader__text {
+        margin-top: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #495057;
+      }
+      #app-loader .app-loader__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      @keyframes app-loader-spin {
+        to { transform: rotate(360deg); }
+      }
+
     body
+      div#app-loader.app-loader
+        div.app-loader__content
+          div.app-loader__spinner
+          p.app-loader__text Загрузка карты...
+
       // map containers
       div#map.map
 
